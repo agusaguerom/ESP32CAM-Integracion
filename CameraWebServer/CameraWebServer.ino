@@ -8,7 +8,7 @@
 // ===========================
 // Enter your WiFi credentials
 // ===========================
-const char* ssid = "Personal Wifii611 2.4-2.4GHz";
+const char* ssid = "Personal Wifi611 2.4-2.4GHz";
 const char* password = "00421551236";
 
 void startCameraServer();
