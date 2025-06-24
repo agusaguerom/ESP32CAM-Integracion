@@ -6,7 +6,7 @@
 #include "camera_pins.h"
 
 // ===========================
-// Enter your WiFi credentials
+// CREDENCIALES WIFI
 // ===========================
 const char* ssid = "Personal Wifi611 2.4-2.4GHz";
 const char* password = "00421551236";
@@ -40,23 +40,21 @@ void setup() {
   config.xclk_freq_hz = 20000000;
   
   // Ajuste de calidad y búfer para mejor streaming
-  config.pixel_format = PIXFORMAT_JPEG;  // para streaming
+  config.pixel_format = PIXFORMAT_JPEG;  
   if (psramFound()) {
-    config.frame_size = FRAMESIZE_SVGA;   // 800x600, buena resolución equilibrada
-    config.jpeg_quality = 10;              // buena calidad JPEG
-    config.fb_count = 2;                   // doble búfer para suavizar el stream
+    config.frame_size = FRAMESIZE_SVGA;   // 800x600,  resolución equilibrada
+    config.jpeg_quality = 10;              
+    config.fb_count = 2;                   
     config.grab_mode = CAMERA_GRAB_LATEST; 
     config.fb_location = CAMERA_FB_IN_PSRAM;
   } else {
-    // Sin PSRAM, bajar un poco resolución y calidad para estabilidad
-    config.frame_size = FRAMESIZE_VGA;    // 640x480
+    config.frame_size = FRAMESIZE_VGA;    
     config.jpeg_quality = 12;
     config.fb_count = 1;
     config.grab_mode = CAMERA_GRAB_WHEN_EMPTY;
     config.fb_location = CAMERA_FB_IN_DRAM;
   }
 
-  // Inicialización cámara
   esp_err_t err = esp_camera_init(&config);
   if (err != ESP_OK) {
     Serial.printf("Camera init failed with error 0x%x\n", err);
@@ -65,17 +63,15 @@ void setup() {
 
   sensor_t * s = esp_camera_sensor_get();
 
-  // Para que el sensor use la misma resolución configurada
   if (psramFound()) {
     s->set_framesize(s, FRAMESIZE_SVGA);
   } else {
     s->set_framesize(s, FRAMESIZE_VGA);
   }
 
-  // Otros ajustes visuales opcionales
-  s->set_vflip(s, 1);       // si la imagen sale al revés
-  s->set_hmirror(s, 1);     // espejado horizontal (ajustar si es necesario)
-  s->set_brightness(s, 1);  // opcional
+  s->set_vflip(s, 0);       
+  s->set_hmirror(s, 1);    
+  s->set_brightness(s, 1);  
   s->set_saturation(s, 0);
 
   // Conexión WiFi
